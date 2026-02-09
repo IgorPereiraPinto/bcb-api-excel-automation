@@ -1,0 +1,10 @@
+series:
+  - nome: "Dólar comercial (compra)"
+    codigo: 1
+    unidade: "R$/US$"
+  - nome: "Euro (compra)"
+    codigo: 21619
+    unidade: "R$/EUR"
+  - nome: "Selic (a.a.)"
+    codigo: 432
+    unidade: "% a.a."
