@@ -1,10 +1,141 @@
+# ═══════════════════════════════════════════════════════════════
+# series_config.yaml — Séries do Banco Central para coleta
+# ═══════════════════════════════════════════════════════════════
+#
+# OBJETIVO:
+#   Definir quais indicadores macroeconômicos serão coletados
+#   automaticamente da API SGS do Banco Central.
+#
+# COMO ADICIONAR UMA NOVA SÉRIE:
+#   1. Consulte o catálogo em docs/03_exemplos_series.md
+#      ou busque direto em: https://www3.bcb.gov.br/sgspub
+#   2. Copie o bloco abaixo e preencha:
+#
+#      - nome: "Nome descritivo do indicador"
+#        codigo: 12345          # Código SGS (número inteiro)
+#        unidade: "% a.a."      # Unidade de medida
+#        categoria: "juros"     # Agrupamento (câmbio, juros, inflação, atividade)
+#        uso: "Para que serve"  # Contexto de negócio
+#
+# NOTA: Os códigos SGS são definidos pelo Banco Central.
+#   Consulte o catálogo oficial para confirmar antes de adicionar.
+# ═══════════════════════════════════════════════════════════════
+
+
+# ─── Configurações gerais ─────────────────────────────────────
+
+settings:
+  days_back_default: 3          # Dias retroativos na execução diária
+                                # (3 = cobre fins de semana e feriados)
+  output_dir: "data/output"     # Pasta do Excel e logs
+  output_filename: "indicadores_bcb.xlsx"
+  log_filename: "run.log"
+  timeout_seconds: 30           # Timeout por requisição à API
+  retry_attempts: 2             # Tentativas em caso de falha
+
+
+# ─── Séries de câmbio ─────────────────────────────────────────
+# Essenciais para holdings com exposição internacional:
+# importação, exportação, contratos em moeda estrangeira.
+
 series:
+
   - nome: "Dólar comercial (compra)"
     codigo: 1
     unidade: "R$/US$"
+    categoria: "cambio"
+    uso: "Contratos de importação, pricing internacional, hedge cambial"
+
+  - nome: "Dólar comercial (venda)"
+    codigo: 10813
+    unidade: "R$/US$"
+    categoria: "cambio"
+    uso: "Receita de exportação, conversão de recebíveis em USD"
+
   - nome: "Euro (compra)"
     codigo: 21619
     unidade: "R$/EUR"
+    categoria: "cambio"
+    uso: "Operações com fornecedores europeus, viagens corporativas"
+
+  - nome: "Euro (venda)"
+    codigo: 21620
+    unidade: "R$/EUR"
+    categoria: "cambio"
+    uso: "Receita de operações denominadas em EUR"
+
+
+# ─── Séries de juros ──────────────────────────────────────────
+# Base para custo de capital, projeções financeiras e
+# benchmark de investimentos da holding.
+
   - nome: "Selic (a.a.)"
     codigo: 432
     unidade: "% a.a."
+    categoria: "juros"
+    uso: "Custo de oportunidade, taxa de desconto em valuation, referência para CDI"
+
+  - nome: "CDI (a.a.)"
+    codigo: 4389
+    unidade: "% a.a."
+    categoria: "juros"
+    uso: "Benchmark de aplicações financeiras, rendimento de caixa"
+
+
+# ─── Séries de inflação ──────────────────────────────────────
+# Reajustes contratuais, correção de valores, projeções de custo.
+
+  - nome: "IPCA (variação mensal)"
+    codigo: 433
+    unidade: "% a.m."
+    categoria: "inflacao"
+    uso: "Reajuste de contratos, correção de preços, meta de inflação"
+
+  - nome: "IGP-M (variação mensal)"
+    codigo: 189
+    unidade: "% a.m."
+    categoria: "inflacao"
+    uso: "Reajuste de aluguéis e contratos imobiliários"
+
+
+# ═══════════════════════════════════════════════════════════════
+# SÉRIES OPCIONAIS (descomente conforme necessidade)
+# ═══════════════════════════════════════════════════════════════
+#
+# ─── Atividade econômica ──────────────────────────────────────
+#
+#  - nome: "PIB mensal (IBC-Br)"
+#    codigo: 24363
+#    unidade: "índice"
+#    categoria: "atividade"
+#    uso: "Proxy mensal do PIB, cenário macroeconômico"
+#
+#  - nome: "Taxa de desemprego (PNAD)"
+#    codigo: 24369
+#    unidade: "%"
+#    categoria: "atividade"
+#    uso: "Indicador de mercado de trabalho, cenário macro"
+#
+# ─── Câmbio adicional ────────────────────────────────────────
+#
+#  - nome: "Libra esterlina (compra)"
+#    codigo: 21623
+#    unidade: "R$/GBP"
+#    categoria: "cambio"
+#    uso: "Operações com Reino Unido"
+#
+#  - nome: "Iene japonês (compra)"
+#    codigo: 21621
+#    unidade: "R$/JPY"
+#    categoria: "cambio"
+#    uso: "Operações com Japão"
+#
+# ─── Crédito ─────────────────────────────────────────────────
+#
+#  - nome: "Spread bancário (PJ)"
+#    codigo: 20786
+#    unidade: "p.p."
+#    categoria: "credito"
+#    uso: "Custo de crédito para pessoa jurídica"
+#
+# ═══════════════════════════════════════════════════════════════
