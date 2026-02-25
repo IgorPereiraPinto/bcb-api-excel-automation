@@ -1,4 +1,34 @@
+# ═══════════════════════════════════════════════════════════════
+# .gitignore — BCB API Excel Automation
+# ═══════════════════════════════════════════════════════════════
+
+# ── Python ────────────────────────────────────────────────────
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# ── Ambiente virtual ──────────────────────────────────────────
 .venv/
+venv/
+
+# ── Variáveis de ambiente (contém configurações locais) ──────
 .env
+
+# ── Dados gerados (não versionados — são gerados pelo script) ─
+data/output/*.xlsx
+data/output/*.log
+data/raw/*.json
+
+# ── Manter as pastas vazias no Git ───────────────────────────
+!data/output/.gitkeep
+!data/raw/.gitkeep
+
+# ── IDE / SO ──────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
