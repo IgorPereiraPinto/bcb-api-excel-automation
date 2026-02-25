@@ -1,6 +1,19 @@
-pandas>=2.0.0
-requests>=2.31.0
-openpyxl>=3.1.2
-python-dotenv>=1.0.0
-PyYAML>=6.0.1
-pytest>=7.4.0
+# ═══════════════════════════════════════════════════════════════
+# Dependências — BCB API Excel Automation
+# ═══════════════════════════════════════════════════════════════
+#
+# Instalar: pip install -r requirements.txt
+# Atualizar: pip install --upgrade -r requirements.txt
+# ═══════════════════════════════════════════════════════════════
+
+# ── Core ──────────────────────────────────────────────────────
+pandas>=2.0.0           # Manipulação de dados e DataFrames
+requests>=2.31.0        # Requisições HTTP à API SGS do BCB
+openpyxl>=3.1.2         # Leitura e escrita de Excel (.xlsx)
+PyYAML>=6.0.1           # Parsing do arquivo de configuração
+
+# ── Configuração ──────────────────────────────────────────────
+python-dotenv>=1.0.0    # Leitura de variáveis do .env
+
+# ── Testes ────────────────────────────────────────────────────
+pytest>=7.4.0           # Framework de testes
